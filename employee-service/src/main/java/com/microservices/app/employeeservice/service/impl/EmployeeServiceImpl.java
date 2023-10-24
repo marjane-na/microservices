@@ -6,6 +6,7 @@ import com.microservices.app.employeeservice.dto.EmployeeDto;
 import com.microservices.app.employeeservice.entity.Employee;
 import com.microservices.app.employeeservice.mapper.EmployeeMapper;
 import com.microservices.app.employeeservice.repository.EmployeeRepository;
+import com.microservices.app.employeeservice.service.APIClient;
 import com.microservices.app.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
     //private RestTemplate restTemplate;
-    private WebClient webClient;
+    //private WebClient webClient;
+    private APIClient apiClient;
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
@@ -36,11 +38,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> retrievedEmployee = employeeRepository.findById(id);
 //        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity("http://localhost:8080/api/departments/code/" + retrievedEmployee.get().getDepartmentCode(), DepartmentDto.class);
 //        DepartmentDto departmentDto = responseEntity.getBody();
-        DepartmentDto departmentDto = webClient.get()
-                .uri("http://localhost:8080/api/departments/code/" + retrievedEmployee.get().getDepartmentCode())
-                .retrieve()
-                .bodyToMono(DepartmentDto.class)
-                .block();
+//        DepartmentDto departmentDto = webClient.get()
+//                .uri("http://localhost:8080/api/departments/code/" + retrievedEmployee.get().getDepartmentCode())
+//                .retrieve()
+//                .bodyToMono(DepartmentDto.class)
+//                .block();
+        DepartmentDto departmentDto = apiClient.getDepartment(retrievedEmployee.get().getDepartmentCode());
         EmployeeDto retrievedEmployeeDto = EmployeeMapper.mapToEmployeeDto(retrievedEmployee.get());
         APIResponseDto apiResponseDto = new APIResponseDto(retrievedEmployeeDto, departmentDto);
         return apiResponseDto;
