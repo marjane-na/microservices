@@ -1,19 +1,20 @@
-package com.microservices.app.employeeservice.dto;
+package com.microservices.app.organizationservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDto {
+public class OrganizationDto {
     Long id;
-    String firstName;
-    String lastName;
-    String email;
-    String departmentCode;
+    String name;
+    String description;
     String orgCode;
+    LocalDateTime orgCreated;
 }

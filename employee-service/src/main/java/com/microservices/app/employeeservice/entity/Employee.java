@@ -20,4 +20,5 @@ public class Employee{
     String lastName;
     String email;
     String departmentCode;
+    String orgCode;
 }
